@@ -9,7 +9,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Portfolio",
   description: "Portfolio de Julio Nieto Cordón",
-  icons: "https://media.discordapp.net/attachments/1335644715210768425/1452724205459345558/icono.png?ex=694ada58&is=694988d8&hm=74284ddd6feffdd3ac723f9af5e8d1d7ea5a7cf193090e121a019f22a916f9e6&=&format=webp&quality=lossless"
+  icons: "/icons/Logo.webp"
 }
 
 export default function RootLayout({
