@@ -335,7 +335,7 @@ export default function Portfolio() {
               <a href="https://jnc-cineflix.netlify.app/home">
                 <div className="aspect-video bg-accent relative overflow-hidden">
                   <img
-                    src="https://media.discordapp.net/attachments/1335644715210768425/1452722871062237347/Captura_de_pantalla_2025-12-22_182302.png?ex=694ad91a&is=6949879a&hm=d2cdf4e819313e73c1248b7fbab7acfe848356cb9c814e9273eac4c3e409aa89&=&format=webp&quality=lossless&width=1811&height=856"
+                    src="/images/Cineflix.webp"
                     alt="No se pudo cargar la imagen"
                     className="w-full h-full object-content align-mid"
                   />
