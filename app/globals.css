@@ -1,0 +1,222 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+@custom-variant dark (&:is(.dark *));
+
+/* === MAPEO DE TEMAS PARA TAILWIND V4 === */
+@theme {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+/* === VARIABLES DE COLOR: CIAN FUTURISTA (HSL) === */
+:root {
+  --background: hsl(0, 0%, 99.5%);
+  --foreground: hsl(240, 10%, 10%);
+
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(240, 10%, 10%);
+
+  /* CIAN PROFUNDO (Día) - Mejor contraste en fondos claros */
+  --primary: hsl(196, 100%, 35%);
+  --primary-foreground: hsl(0, 0%, 100%);
+
+  --secondary: hsl(240, 5%, 96%);
+  --secondary-foreground: hsl(240, 10%, 20%);
+  --muted: hsl(240, 5%, 96%);
+  --muted-foreground: hsl(240, 4%, 40%);
+  --accent: hsl(240, 5%, 96%);
+  --accent-foreground: hsl(240, 10%, 20%);
+
+  --border: hsl(240, 6%, 85%);
+  --input: hsl(240, 6%, 85%);
+  --ring: hsl(196, 100%, 35%);
+
+  --radius: 0.75rem;
+}
+
+.dark {
+  /* DARK MODE: DEEP SPACE */
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+
+  /* CIAN NEÓN (Noche) */
+  --primary: hsl(192, 100%, 50%);
+  --primary-foreground: hsl(240, 10%, 3.9%);
+
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --ring: hsl(192, 100%, 50%);
+}
+
+/* === ESTILOS BASE Y CUSTOMIZACIONES === */
+@layer base {
+  * {
+    border-color: var(--color-border);
+    border-style: solid;
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    @apply bg-background text-foreground;
+  }
+}
+
+@utility glass {
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.dark .glass {
+  background-color: rgba(10, 10, 10, 0.6);
+}
+
+@utility glass-card {
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: var(--color-primary);
+  }
+}
+
+.dark .glass-card {
+  background-color: rgba(10, 10, 10, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@utility text-glow {
+  text-shadow: 0 0 20px var(--color-primary);
+}
+
+/* === ANIMACIONES (AURORA Y MARQUEE) === */
+.aurora-bg-1 {
+  background: radial-gradient(circle at center, var(--color-primary) 0%, transparent 60%);
+  animation: aurora-blob-1 25s ease-in-out infinite alternate;
+}
+
+@property --pos-x-1 {
+  syntax: '<percentage>';
+  initial-value: 50%;
+  inherits: false;
+}
+
+@property --pos-y-1 {
+  syntax: '<percentage>';
+  initial-value: 50%;
+  inherits: false;
+}
+
+@property --pos-x-3 {
+  syntax: '<percentage>';
+  initial-value: 50%;
+  inherits: false;
+}
+
+@property --pos-y-3 {
+  syntax: '<percentage>';
+  initial-value: 50%;
+  inherits: false;
+}
+
+@keyframes move-aurora-1 {
+  0% {
+    --pos-x-1: 10%;
+    --pos-y-1: 20%;
+  }
+
+  50% {
+    --pos-x-1: 80%;
+    --pos-y-1: 40%;
+  }
+
+  100% {
+    --pos-x-1: 30%;
+    --pos-y-1: 80%;
+  }
+}
+
+@keyframes move-aurora-3 {
+  0% {
+    --pos-x-3: 50%;
+    --pos-y-3: 80%;
+  }
+
+  50% {
+    --pos-x-3: 90%;
+    --pos-y-3: 20%;
+  }
+
+  100% {
+    --pos-x-3: 10%;
+    --pos-y-3: 50%;
+  }
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 35s linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 35s linear infinite;
+}
+
+.pause-on-hover:hover .animate-marquee-left,
+.pause-on-hover:hover .animate-marquee-right {
+  animation-play-state: paused;
+}
