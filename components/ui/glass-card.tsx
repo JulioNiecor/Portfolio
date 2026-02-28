@@ -1,6 +1,5 @@
 "use client"
 
-// OPTIMIZACIÓN 1: Cambiamos MouseEvent por PointerEvent
 import { PointerEvent, useCallback } from "react"
 import { motion, useMotionTemplate, useMotionValue, HTMLMotionProps } from "framer-motion"
 import { cn } from "@/lib/utils"
@@ -53,7 +52,6 @@ export function GlassCard({ children, className, hoverEffect = true, activeGlow 
       )}
 
       <div
-        // OPTIMIZACIÓN 1.1: Usamos onPointerMove en lugar de onMouseMove
         onPointerMove={hoverEffect ? handlePointerMove : undefined}
         className={cn(
           "glass-card relative flex flex-col h-full w-full overflow-hidden rounded-xl p-6",
@@ -63,7 +61,6 @@ export function GlassCard({ children, className, hoverEffect = true, activeGlow 
       >
         {hoverEffect && (
           <motion.div
-            // OPTIMIZACIÓN 3: transform-gpu, translate-z-0 y will-change mandan esta capa a la tarjeta gráfica.
             className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100 z-0 transform-gpu translate-z-0 will-change-[background,opacity]"
             style={{ background: softBg }}
           />
@@ -71,7 +68,6 @@ export function GlassCard({ children, className, hoverEffect = true, activeGlow 
 
         {hoverEffect && (
           <motion.div
-            // OPTIMIZACIÓN 3: Igual aquí. Crucial para las máscaras complejas.
             className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100 z-10 transform-gpu translate-z-0 will-change-[background,opacity]"
             style={{
               background: neonBg,

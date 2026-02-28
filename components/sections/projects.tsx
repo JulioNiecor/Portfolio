@@ -149,7 +149,9 @@ const ProjectCard = memo(function ProjectCard({
 /**
  * Carousel pagination dot indicator.
  */
-const PaginationDot = memo(function PaginationDot({ isActive, index, onClick }: any) {
+interface PaginationDotProps { isActive: boolean; index: number; onClick: (i: number) => void }
+
+const PaginationDot = memo(function PaginationDot({ isActive, index, onClick }: PaginationDotProps) {
   const handleClick = useCallback(() => onClick(index), [index, onClick]);
   return (
     <button

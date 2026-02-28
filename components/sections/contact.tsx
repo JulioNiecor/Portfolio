@@ -90,10 +90,10 @@ export function ContactSection() {
               <p className="text-xs text-muted-foreground uppercase tracking-wider font-bold mb-4">Redes Sociales</p>
               <div className="flex flex-row gap-4">
 
-                <a href="https://linkedin.com/in/tu-usuario" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de LinkedIn" className="h-12 w-12 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary/20 transition-colors">
+                <a href="https://www.linkedin.com/in/julioniecor/" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de LinkedIn" className="h-12 w-12 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary/20 transition-colors">
                   <Linkedin className="h-5 w-5 hover:scale-110 transition-transform" />
                 </a>
-                <a href="https://github.com/tu-usuario" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de GitHub" className="h-12 w-12 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary/20 transition-colors">
+                <a href="https://github.com/JulioNiecor" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de GitHub" className="h-12 w-12 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary/20 transition-colors">
                   <Github className="h-5 w-5 hover:scale-110 transition-transform" />
                 </a>
               </div>

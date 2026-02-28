@@ -59,7 +59,7 @@ export function Navbar() {
         )}
       >
         <div className="container mx-auto px-4 h-full flex items-center justify-between">
-          <a href="#" className="flex items-center gap-2 font-bold text-xl tracking-tighter outline-none">
+          <a href="#" aria-label="Volver al inicio" className="flex items-center gap-2 font-bold text-xl tracking-tighter outline-none">
             <Code2 className="text-primary h-6 w-6" />
             <span>JNC<span className="text-primary">.</span></span>
           </a>

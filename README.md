@@ -41,4 +41,4 @@ Su filosofía de desarrollo prioriza:
 3. **Escalabilidad del Código:** Arquitecturas que no solo funcionan hoy, sino que están documentadas y ordenadas para los equipos del mañana.
 
 ---
-[✉️ Hablemos: julioniecor@gmail.com](mailto:julioniecor@gmail.com) • Hecho con pasión, React y Tailwind.
+[✉️ Email](mailto:julioniecor@gmail.com) • [💼 LinkedIn](https://www.linkedin.com/in/julioniecor/) • [🐙 GitHub](https://github.com/JulioNiecor) • Hecho con pasión, React y Tailwind.

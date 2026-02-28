@@ -65,7 +65,7 @@ export function AboutSection() {
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-0.5">Email</p>
-                  <a href="mailto:julioniecor@gmail.com" className="font-medium hover:text-primary transition-colors text-[15px] break-all">
+                  <a href="mailto:julioniecor@gmail.com" aria-label="Enviar correo electrónico a julioniecor@gmail.com" className="font-medium hover:text-primary transition-colors text-[15px] break-all">
                     julioniecor@gmail.com
                   </a>
                 </div>
