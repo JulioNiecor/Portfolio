@@ -27,7 +27,7 @@ export function GlassCard({ children, className, hoverEffect = true, activeGlow 
   )
 
   const softBg = useMotionTemplate`
-    radial-gradient(400px circle at ${mouseX}px ${mouseY}px, rgba(0, 210, 255, 0.08), transparent 80%)
+    radial-gradient(400px circle at ${mouseX}px ${mouseY}px, color-mix(in srgb, var(--primary) 12%, transparent), transparent 80%)
   `
   const neonBg = useMotionTemplate`
     radial-gradient(300px circle at ${mouseX}px ${mouseY}px, var(--primary), transparent 80%)
@@ -57,7 +57,7 @@ export function GlassCard({ children, className, hoverEffect = true, activeGlow 
         onPointerMove={hoverEffect ? handlePointerMove : undefined}
         className={cn(
           "glass-card relative flex flex-col h-full w-full overflow-hidden rounded-xl p-6",
-          "bg-black/3 dark:bg-white/5 border border-black/15 dark:border-white/10",
+          "bg-card border border-border",
           className
         )}
       >

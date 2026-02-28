@@ -128,7 +128,7 @@ export function HeroSection() {
               asChild
               size="lg"
               variant="outline"
-              className="min-w-40 h-12 rounded-full text-base border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/20 cursor-pointer"
+              className="min-w-40 h-12 rounded-full text-base border-border bg-background/80 hover:bg-muted hover:border-border cursor-pointer"
             >
               <a
                 href="JulioNieto_CV_Simple.pdf"

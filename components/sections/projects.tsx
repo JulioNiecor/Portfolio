@@ -86,7 +86,7 @@ const ProjectCard = memo(function ProjectCard({
         className={cn(
           "flex flex-col p-0 group/card",
           "bg-transparent backdrop-blur-none",
-          isCenter ? "border-primary/50 shadow-[0_0_30px_-5px_var(--color-primary)] transition-[box-shadow,border-color] duration-500" : "border-white/5 shadow-none transition-[box-shadow,border-color] duration-500"
+          isCenter ? "border-primary/50 shadow-[0_0_30px_-5px_var(--color-primary)] transition-[box-shadow,border-color] duration-500" : "border-border shadow-none transition-[box-shadow,border-color] duration-500"
         )}
       >
         <div className="relative h-40 md:h-60 w-full shrink-0 overflow-hidden bg-muted/20">
@@ -100,12 +100,12 @@ const ProjectCard = memo(function ProjectCard({
             draggable={false}
             onDragStart={(e) => e.preventDefault()}
           />
-          <div className="absolute -bottom-4 -right-4 text-5xl md:text-6xl font-black text-black/40 dark:text-white/90 uppercase pointer-events-none mix-blend-overlay">
+          <div className="absolute -bottom-4 -right-4 text-5xl md:text-6xl font-black text-foreground/20 dark:text-foreground/60 uppercase pointer-events-none mix-blend-overlay">
             0{project.id}
           </div>
         </div>
 
-        <div className="relative p-5 md:p-8 flex flex-col grow border-t border-white/5 overflow-hidden">
+        <div className="relative p-5 md:p-8 flex flex-col grow border-t border-border overflow-hidden">
           <div className="absolute inset-0 bg-background/90 backdrop-blur-xl -z-10" />
           <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-3 relative z-10">{project.title}</h3>
           <p className="text-muted-foreground text-xs md:text-sm leading-relaxed mb-4 md:mb-6 grow relative z-10 line-clamp-5 md:line-clamp-6">
@@ -134,7 +134,7 @@ const ProjectCard = memo(function ProjectCard({
             <Button
               variant="outline"
               size="icon"
-              className="border-white/10 hover:bg-white/10 cursor-pointer bg-background/50 h-9 w-9 md:h-10 md:w-10 transition-colors duration-300"
+              className="border-border hover:bg-muted cursor-pointer bg-background/50 h-9 w-9 md:h-10 md:w-10 transition-colors duration-300"
               onClick={(e) => openLink(e, project.github)}
             >
               <Github className="h-4 w-4 md:h-5 md:w-5" />
@@ -159,7 +159,7 @@ const PaginationDot = memo(function PaginationDot({ isActive, index, onClick }: 
         "h-2 rounded-full transition-all duration-500 cursor-pointer",
         isActive
           ? "w-8 bg-primary shadow-md shadow-primary/20 dark:shadow-[0_0_10px_var(--color-primary)]"
-          : "w-2 bg-black/20 hover:bg-black/40 dark:bg-white/20 dark:hover:bg-white/40"
+          : "w-2 bg-border hover:bg-muted-foreground/40"
       )}
     />
   )
