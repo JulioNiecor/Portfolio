@@ -29,9 +29,9 @@ export const metadata: Metadata = {
     siteName: "Julio Nieto Portfolio",
     images: [
       {
-        url: "/logo.webp", // En un entorno ideal usaríamos una previsualización rectangular (1200x630px)
-        width: 800,
-        height: 600,
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
         alt: "Julio Nieto - Frontend Developer",
       },
     ],
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Julio Nieto | Frontend Developer",
     description: "Desarrollador Frontend especializado en interfaces modernas e interactivas.",
-    images: ["/logo.webp"],
+    images: ["/og-image.png"],
   },
   icons: {
     icon: "/logo.webp",
