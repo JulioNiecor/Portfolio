@@ -5,10 +5,11 @@ import { GlassCard } from "@/components/ui/glass-card"
 import { 
   SiReact, SiNextdotjs, SiTypescript, SiJavascript, SiAngular,
   SiHtml5, SiCss, SiTailwindcss, SiNodedotjs, SiFirebase,
-  SiGit, SiGithub, SiFigma
+  SiGit, SiGithub, SiFigma, SiVite, SiFramer, SiMysql, SiPrisma,
+  SiPnpm, SiEslint, SiPrettier, SiNetlify
 } from "react-icons/si"
 import { VscVscode } from "react-icons/vsc"
-import { Monitor, Palette, Server, PenTool } from "lucide-react"
+import { Monitor, Palette, Server, PenTool, Layers, FileCheck, ShieldCheck } from "lucide-react"
 
 const skillCategories = [
   {
@@ -20,7 +21,9 @@ const skillCategories = [
       { name: "Next.js", Icon: SiNextdotjs },
       { name: "TypeScript", Icon: SiTypescript },
       { name: "JavaScript", Icon: SiJavascript },
-      { name: "Angular", Icon: SiAngular }
+      { name: "Angular", Icon: SiAngular },
+      { name: "TanStack", Icon: Layers },
+      { name: "Zod", Icon: FileCheck }
     ]
   },
   {
@@ -29,6 +32,9 @@ const skillCategories = [
     className: "md:col-span-1",
     skills: [
       { name: "Node.js", Icon: SiNodedotjs },
+      { name: "MySQL", Icon: SiMysql },
+      { name: "Prisma", Icon: SiPrisma },
+      { name: "NextAuth", Icon: ShieldCheck },
       { name: "Firebase", Icon: SiFirebase }
     ]
   },
@@ -38,6 +44,7 @@ const skillCategories = [
     className: "md:col-span-1",
     skills: [
       { name: "Tailwind CSS", Icon: SiTailwindcss },
+      { name: "Framer Motion", Icon: SiFramer },
       { name: "HTML5", Icon: SiHtml5 },
       { name: "CSS3", Icon: SiCss }
     ]
@@ -49,6 +56,11 @@ const skillCategories = [
     skills: [
       { name: "Git", Icon: SiGit },
       { name: "GitHub", Icon: SiGithub },
+      { name: "PNPM", Icon: SiPnpm },
+      { name: "Vite", Icon: SiVite },
+      { name: "Netlify", Icon: SiNetlify },
+      { name: "ESLint", Icon: SiEslint },
+      { name: "Prettier", Icon: SiPrettier },
       { name: "Figma", Icon: SiFigma },
       { name: "VS Code", Icon: VscVscode }
     ]
