@@ -43,7 +43,7 @@ const projects = [
     description: "Experiencia web inmersiva para una floristería artesanal. Diseñada con enfoque 'Top Tier Agency', la aplicación prioriza una interfaz visual impresionante, animaciones coreografiadas al milisegundo y un rendimiento ultrarrápido. Implementa Server-Side Rendering estricto, Code Splitting hiper-optimizado y está 100% preparada para SEO técnico avanzado.",
     tech: ["React 19", "TanStack Start", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Zod"],
     github: "https://github.com/JulioNiecor/JNC-Floristeria",
-    demo: "https://github.com/JulioNiecor/JNC-Floristeria",
+    demo: "https://jncfloristeria.netlify.app/",
     image: "/projects/floristeria.webp",
   },
   {
@@ -52,7 +52,7 @@ const projects = [
     description: "Plataforma visual premium que simula una empresa exclusiva de alquiler de yates de alta gama. Una SPA hiper-escalable centrada en una UI/UX impecable y tiempos de carga instantáneos. Destaca por incluir un motor de internacionalización (i18n) a medida desde cero y SEO dinámico inyectado con esquemas JSON-LD.",
     tech: ["React 19", "TanStack Router", "TypeScript", "Tailwind CSS v4", "Vite"],
     github: "https://github.com/JulioNiecor/JNC-Barcos",
-    demo: "https://github.com/JulioNiecor/JNC-Barcos",
+    demo: "https://jncbarcos.netlify.app/",
     image: "/projects/barcos.webp",
   },
 ]
