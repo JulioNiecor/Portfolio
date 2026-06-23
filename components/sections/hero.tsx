@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { Mail, ArrowDown, ChevronRight, Download } from "lucide-react"
+import { useState, useEffect, useRef } from "react"
+import { m } from "framer-motion"
+import { ChevronRight, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { HeroBackground } from "@/components/ui/hero-background"
@@ -12,40 +12,37 @@ const roles = ["Desarrollador Frontend", "Arquitecto UI/UX", "Creador de Experie
 
 function TypewriterEffect() {
   const [text, setText] = useState("")
-  const [roleIndex, setRoleIndex] = useState(0)
-  const [isDeleting, setIsDeleting] = useState(false)
-  const [delta, setDelta] = useState(150)
+  const roleIndex = useRef(0)
+  const isDeleting = useRef(false)
+  const delta = useRef(150)
 
   useEffect(() => {
-    let ticker = setInterval(() => {
-      tick()
-    }, delta)
+    const tick = () => {
+      const i = roleIndex.current % roles.length
+      const fullText = roles[i]
+      const updatedText = isDeleting.current
+        ? fullText.substring(0, text.length - 1)
+        : fullText.substring(0, text.length + 1)
 
-    return () => clearInterval(ticker)
-  }, [text, delta])
+      setText(updatedText)
 
-  const tick = () => {
-    let i = roleIndex % roles.length
-    let fullText = roles[i]
-    let updatedText = isDeleting
-      ? fullText.substring(0, text.length - 1)
-      : fullText.substring(0, text.length + 1)
+      if (isDeleting.current) {
+        delta.current = delta.current / 1.5
+      }
 
-    setText(updatedText)
-
-    if (isDeleting) {
-      setDelta(prev => prev / 1.5)
+      if (!isDeleting.current && updatedText === fullText) {
+        isDeleting.current = true
+        delta.current = 2000
+      } else if (isDeleting.current && updatedText === "") {
+        isDeleting.current = false
+        roleIndex.current += 1
+        delta.current = 150
+      }
     }
 
-    if (!isDeleting && updatedText === fullText) {
-      setIsDeleting(true)
-      setDelta(2000)
-    } else if (isDeleting && updatedText === "") {
-      setIsDeleting(false)
-      setRoleIndex(roleIndex + 1)
-      setDelta(150)
-    }
-  }
+    const ticker = setTimeout(tick, delta.current)
+    return () => clearTimeout(ticker)
+  }, [text])
 
   return (
     <span className="border-r-2 border-primary animate-pulse pr-1">
@@ -54,12 +51,12 @@ function TypewriterEffect() {
   )
 }
 
+const scrollToContact = () => {
+  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+}
+
 // Main Hero Component
 export function HeroSection() {
-  const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
-  }
-
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Cinematic Background */}
@@ -69,7 +66,7 @@ export function HeroSection() {
         <div className="flex flex-col items-center text-center space-y-10">
 
           {/* Animated Profile Badge */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -81,7 +78,7 @@ export function HeroSection() {
               </span>
               Disponible para proyectos
             </Badge>
-          </motion.div>
+          </m.div>
 
           {/* Main Title */}
           <div className="space-y-4">
@@ -98,7 +95,7 @@ export function HeroSection() {
             </div>
           </div>
 
-          <motion.p
+          <m.p
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -106,10 +103,10 @@ export function HeroSection() {
           >
             Transformo conceptos abstractos en interfaces web <span className="text-foreground font-medium underline decoration-primary/50 underline-offset-4">pixel-perfect</span>,
             rápidas y accesibles.
-          </motion.p>
+          </m.p>
 
           {/* Action Buttons */}
-          <motion.div
+          <m.div
             className="flex flex-col sm:flex-row items-center gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -138,12 +135,12 @@ export function HeroSection() {
                 CV
               </a>
             </Button>
-          </motion.div>
+          </m.div>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <motion.div
+      <m.div
         className="absolute bottom-10 left-1/2 -translate-x-1/2 cursor-pointer"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -153,14 +150,14 @@ export function HeroSection() {
         <div className="flex flex-col items-center gap-2">
           <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Scroll</span>
           <div className="w-0.5 h-12 bg-linear-to-b from-transparent via-primary to-transparent relative overflow-hidden">
-            <motion.div
+            <m.div
               className="absolute top-0 left-0 w-full h-1/2 bg-primary"
               animate={{ top: ["-100%", "100%"] }}
               transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
             />
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </section>
   )
 }

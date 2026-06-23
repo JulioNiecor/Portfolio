@@ -23,7 +23,7 @@ export function AboutSection() {
           <div className="lg:col-span-2 flex flex-col h-full">
             <GlassCard className="p-8 md:p-10 flex flex-col h-full">
               <div className="mb-8 flex items-center gap-4">
-                <div className="p-3 bg-primary/10 rounded-full text-primary shadow-inner">
+                <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-full bg-primary/10 text-primary shadow-inner border border-primary/20">
                   <User className="h-6 w-6" />
                 </div>
                 <h3 className="text-2xl font-semibold tracking-tight">Perfil Profesional</h3>
@@ -47,7 +47,7 @@ export function AboutSection() {
 
             <GlassCard className="p-6 md:p-8">
               <div className="flex items-center justify-center gap-4">
-                <div className="p-2.5 rounded-full bg-primary/10 text-primary">
+                <div className="flex items-center justify-center w-10 h-10 shrink-0 rounded-full bg-primary/10 text-primary shadow-inner border border-primary/20">
                   <MapPin className="h-5 w-5" />
                 </div>
                 <div>
@@ -60,7 +60,7 @@ export function AboutSection() {
               <div className="h-px w-full bg-black/10 dark:bg-white/10 my-5" />
 
               <div className="flex items-center justify-center gap-4">
-                <div className="p-2.5 rounded-full bg-primary/10 text-primary">
+                <div className="flex items-center justify-center w-10 h-10 shrink-0 rounded-full bg-primary/10 text-primary shadow-inner border border-primary/20">
                   <Mail className="h-5 w-5" />
                 </div>
                 <div>
@@ -74,7 +74,9 @@ export function AboutSection() {
 
             <GlassCard className="p-6 md:p-8">
               <div className="flex items-center gap-3 mb-5">
-                <Languages className="h-5 w-5 text-primary" />
+                <div className="flex items-center justify-center w-10 h-10 shrink-0 rounded-full bg-primary/10 text-primary shadow-inner border border-primary/20">
+                  <Languages className="h-5 w-5" />
+                </div>
                 <h3 className="text-lg font-semibold tracking-tight">Idiomas</h3>
               </div>
               <div className="flex flex-col gap-3.5">

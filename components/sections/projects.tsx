@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect, useCallback, memo } from "react"
-import { motion, AnimatePresence, PanInfo } from "framer-motion"
+import { useState, useEffect, useSyncExternalStore } from "react"
+import { m, AnimatePresence, PanInfo, Variants } from "framer-motion"
 import { ChevronLeft, ChevronRight, ExternalLink, Github } from "lucide-react"
 import Image from "next/image"
 import { GlassCard } from "@/components/ui/glass-card"
@@ -37,6 +37,24 @@ const projects = [
     demo: "https://jnccineflixv2.netlify.app/",
     image: "/projects/cineflixv2.webp",
   },
+  {
+    id: 4,
+    title: "Jardín Secreto",
+    description: "Experiencia web inmersiva para una floristería artesanal. Diseñada con enfoque 'Top Tier Agency', la aplicación prioriza una interfaz visual impresionante, animaciones coreografiadas al milisegundo y un rendimiento ultrarrápido. Implementa Server-Side Rendering estricto, Code Splitting hiper-optimizado y está 100% preparada para SEO técnico avanzado.",
+    tech: ["React 19", "TanStack Start", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Zod"],
+    github: "https://github.com/JulioNiecor/JNC-Floristeria",
+    demo: "https://github.com/JulioNiecor/JNC-Floristeria",
+    image: "/projects/floristeria.webp",
+  },
+  {
+    id: 5,
+    title: "Marenostro Charter",
+    description: "Plataforma visual premium que simula una empresa exclusiva de alquiler de yates de alta gama. Una SPA hiper-escalable centrada en una UI/UX impecable y tiempos de carga instantáneos. Destaca por incluir un motor de internacionalización (i18n) a medida desde cero y SEO dinámico inyectado con esquemas JSON-LD.",
+    tech: ["React 19", "TanStack Router", "TypeScript", "Tailwind CSS v4", "Vite"],
+    github: "https://github.com/JulioNiecor/JNC-Barcos",
+    demo: "https://github.com/JulioNiecor/JNC-Barcos",
+    image: "/projects/barcos.webp",
+  },
 ]
 
 const springTransition = {
@@ -50,16 +68,26 @@ const springTransition = {
  * Project card component with 3D transformations and drag support.
  * Memoized to avoid re-renders on sibling card updates.
  */
-const ProjectCard = memo(function ProjectCard({
+interface ProjectCardProps {
+  project: { id: number; title: string; description: string; image: string; demo: string; github: string; tech: string[] };
+  isCenter: boolean;
+  offset: number;
+  isMobile: boolean;
+  handleDragEnd: (e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
+  openLink: (e: React.MouseEvent, url: string) => void;
+  isPriority: boolean;
+}
+
+function ProjectCard({
   project, isCenter, offset, isMobile, handleDragEnd, openLink, isPriority
-}: any) {
+}: ProjectCardProps) {
   const xTranslation = isMobile ? offset * 180 : offset * 260;
   const zTranslation = isMobile ? -100 : -200;
   const yRotation = isMobile ? offset * -15 : offset * -25;
   const scaleValue = isCenter ? 1 : (isMobile ? 0.85 : 0.82);
 
   return (
-    <motion.div
+    <m.div
       className={cn(
         "absolute w-full max-w-70 md:max-w-120 will-change-transform touch-pan-y",
         isCenter ? "z-30 cursor-grab active:cursor-grabbing" : "z-10"
@@ -114,7 +142,7 @@ const ProjectCard = memo(function ProjectCard({
 
           <div className="flex flex-wrap gap-1 md:gap-2 mb-4 md:mb-8 relative z-10">
             {project.tech.map((tech: string) => (
-              <Badge key={tech} variant="secondary" className="bg-primary/10 text-primary border-primary/20 text-[9px] md:text-[10px] uppercase">
+              <Badge key={tech} variant="secondary" className="bg-primary/10 text-primary border-primary/20 text-[9px] md:text-[10px] uppercase transition-all duration-500 group-hover/card:bg-primary/20 group-hover/card:border-primary/50 group-hover/card:shadow-[0_0_15px_-3px_var(--color-primary)]">
                 {tech}
               </Badge>
             ))}
@@ -142,80 +170,123 @@ const ProjectCard = memo(function ProjectCard({
           </div>
         </div>
       </GlassCard>
-    </motion.div>
+    </m.div>
   )
-});
+}
 
 /**
  * Carousel pagination dot indicator.
  */
-interface PaginationDotProps { isActive: boolean; index: number; onClick: (i: number) => void }
+interface PaginationDotProps { 
+  isActive: boolean; 
+  index: number; 
+  onClick: (i: number) => void;
+  isPaused: boolean;
+  onComplete: () => void;
+}
 
-const PaginationDot = memo(function PaginationDot({ isActive, index, onClick }: PaginationDotProps) {
-  const handleClick = useCallback(() => onClick(index), [index, onClick]);
+const dotVariants: Variants = {
+  active: { width: "100%", transition: { duration: 5, ease: "linear" } },
+  paused: { width: "0%", transition: { duration: 0.3, ease: "easeOut" } }
+}
+
+function PaginationDot({ isActive, index, onClick, isPaused, onComplete }: PaginationDotProps) {
+  const handleClick = () => onClick(index);
   return (
     <button
+      type="button"
       onClick={handleClick}
       aria-label={`Ir al proyecto ${index + 1}`}
       className={cn(
-        "h-2 rounded-full transition-all duration-500 cursor-pointer",
+        "h-2 rounded-full transition-all duration-500 cursor-pointer relative overflow-hidden",
         isActive
-          ? "w-8 bg-primary shadow-md shadow-primary/20 dark:shadow-[0_0_10px_var(--color-primary)]"
+          ? "w-12 bg-primary/20 dark:bg-primary/10"
           : "w-2 bg-border hover:bg-muted-foreground/40"
       )}
-    />
+    >
+      {isActive && (
+        <m.div
+          className="absolute top-0 left-0 h-full bg-primary shadow-md shadow-primary/20 dark:shadow-[0_0_10px_var(--color-primary)]"
+          variants={dotVariants}
+          initial="paused"
+          animate={isPaused ? "paused" : "active"}
+          onAnimationComplete={(variantName) => {
+            if (variantName === "active") {
+              onComplete();
+            }
+          }}
+        />
+      )}
+    </button>
   )
-});
+}
+
+const subscribeMedia = (callback: () => void) => {
+  if (typeof window === "undefined") return () => {}
+  const mediaQuery = window.matchMedia("(max-width: 767px)")
+  mediaQuery.addEventListener("change", callback)
+  return () => mediaQuery.removeEventListener("change", callback)
+}
+const getMediaSnapshot = () => typeof window !== "undefined" ? window.matchMedia("(max-width: 767px)").matches : false
+const getServerSnapshot = () => false
+
+const openLink = (e: React.MouseEvent, url: string) => {
+  e.preventDefault();
+  e.stopPropagation();
+  if (url !== "#") window.open(url, "_blank", "noopener,noreferrer");
+}
 
 export function ProjectsSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isMobile, setIsMobile] = useState(false)
+  const isMobile = useSyncExternalStore(subscribeMedia, getMediaSnapshot, getServerSnapshot)
+  const [isPaused, setIsPaused] = useState(false)
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)")
-    setIsMobile(mediaQuery.matches)
-
-    const handleMediaChange = (e: MediaQueryListEvent) => {
-      setIsMobile(e.matches)
-    }
-
-    mediaQuery.addEventListener("change", handleMediaChange)
-    return () => mediaQuery.removeEventListener("change", handleMediaChange)
-  }, [])
-
-  const paginate = useCallback((direction: number) => {
+  const paginate = (direction: number) => {
     setCurrentIndex((prev) => {
       let nextIndex = prev + direction
       if (nextIndex < 0) nextIndex = projects.length - 1
       if (nextIndex >= projects.length) nextIndex = 0
       return nextIndex
     })
-  }, [])
+  }
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") paginate(-1)
-      if (e.key === "ArrowRight") paginate(1)
+      setCurrentIndex((prev) => {
+        let nextIndex = prev
+        if (e.key === "ArrowLeft") nextIndex = prev - 1
+        else if (e.key === "ArrowRight") nextIndex = prev + 1
+        else return prev
+        
+        if (nextIndex < 0) nextIndex = projects.length - 1
+        if (nextIndex >= projects.length) nextIndex = 0
+        return nextIndex
+      })
     }
     window.addEventListener("keydown", handleKeyDown, { passive: true })
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [paginate])
+  }, [])
 
-  const handleDragEnd = useCallback((e: any, { offset }: PanInfo) => {
+  // Autoplay is now driven by the PaginationDot animation
+  const handleAutoPlayComplete = () => {
+    paginate(1)
+  }
+
+  const handleDragEnd = (e: MouseEvent | TouchEvent | PointerEvent, { offset }: PanInfo) => {
     const swipe = offset.x
     const swipeThreshold = 50
     if (swipe < -swipeThreshold) paginate(1)
     else if (swipe > swipeThreshold) paginate(-1)
-  }, [paginate])
-
-  const openLink = useCallback((e: React.MouseEvent, url: string) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (url !== "#") window.open(url, "_blank", "noopener,noreferrer");
-  }, [])
-
+  }
   return (
-    <section id="projects" className="py-32 px-4 md:px-6 relative overflow-hidden">
+    <section 
+      id="projects" 
+      className="py-32 px-4 md:px-6 relative overflow-hidden"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={() => setIsPaused(true)}
+      onTouchEnd={() => setIsPaused(false)}
+    >
 
       {/* Background ambient lighting */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-1/2 bg-primary/5 rounded-[100%] blur-[100px] pointer-events-none -z-10" />
@@ -245,7 +316,7 @@ export function ProjectsSection() {
         </div>
 
         {/* Animated Carousel Content */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -290,16 +361,18 @@ export function ProjectsSection() {
           </div>
 
           <div className="flex justify-center items-center gap-3 mt-6 md:mt-8 relative">
-            {projects.map((_, idx) => (
+            {projects.map((project, idx) => (
               <PaginationDot
-                key={idx}
+                key={project.title}
                 index={idx}
                 isActive={currentIndex === idx}
                 onClick={setCurrentIndex}
+                isPaused={isPaused}
+                onComplete={handleAutoPlayComplete}
               />
             ))}
           </div>
-        </motion.div>
+        </m.div>
 
       </div>
     </section>

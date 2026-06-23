@@ -1,7 +1,7 @@
 "use client"
 
-import { PointerEvent, useCallback } from "react"
-import { motion, useMotionTemplate, useMotionValue, HTMLMotionProps } from "framer-motion"
+import { PointerEvent } from "react"
+import { m, useTransform, useMotionValue, HTMLMotionProps } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 interface GlassCardProps extends HTMLMotionProps<"div"> {
@@ -16,24 +16,25 @@ export function GlassCard({ children, className, hoverEffect = true, activeGlow 
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
 
-  const handlePointerMove = useCallback(
+  const handlePointerMove = (
     ({ currentTarget, clientX, clientY }: PointerEvent) => {
       const { left, top } = currentTarget.getBoundingClientRect()
       mouseX.set(clientX - left)
       mouseY.set(clientY - top)
-    },
-    [mouseX, mouseY]
+    }
   )
 
-  const softBg = useMotionTemplate`
-    radial-gradient(400px circle at ${mouseX}px ${mouseY}px, color-mix(in srgb, var(--primary) 12%, transparent), transparent 80%)
-  `
-  const neonBg = useMotionTemplate`
-    radial-gradient(300px circle at ${mouseX}px ${mouseY}px, var(--primary), transparent 80%)
-  `
+  const softBg = useTransform(
+    [mouseX, mouseY],
+    ([x, y]) => `radial-gradient(400px circle at ${x}px ${y}px, color-mix(in srgb, var(--primary) 12%, transparent), transparent 80%)`
+  )
+  const neonBg = useTransform(
+    [mouseX, mouseY],
+    ([x, y]) => `radial-gradient(300px circle at ${x}px ${y}px, var(--primary), transparent 80%)`
+  )
 
   return (
-    <motion.div
+    <m.div
       className="relative group h-full w-full"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -60,14 +61,14 @@ export function GlassCard({ children, className, hoverEffect = true, activeGlow 
         )}
       >
         {hoverEffect && (
-          <motion.div
+          <m.div
             className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100 z-0 transform-gpu translate-z-0 will-change-[background,opacity]"
             style={{ background: softBg }}
           />
         )}
 
         {hoverEffect && (
-          <motion.div
+          <m.div
             className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100 z-10 transform-gpu translate-z-0 will-change-[background,opacity]"
             style={{
               background: neonBg,
@@ -84,6 +85,6 @@ export function GlassCard({ children, className, hoverEffect = true, activeGlow 
           {children}
         </div>
       </div>
-    </motion.div>
+    </m.div>
   )
 }

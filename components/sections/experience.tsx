@@ -24,7 +24,9 @@ export function ExperienceSection() {
                     {/* Professional Experience Column */}
                     <div>
                         <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-                            <Briefcase className="text-primary h-8 w-8" />
+                            <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-full bg-primary/10 text-primary shadow-inner border border-primary/20">
+                                <Briefcase className="h-6 w-6" />
+                            </div>
                             Experiencia
                         </h2>
                         <div className="space-y-6">
@@ -63,7 +65,9 @@ export function ExperienceSection() {
                     {/* Education Column */}
                     <div>
                         <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-                            <GraduationCap className="text-primary h-8 w-8" />
+                            <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-full bg-primary/10 text-primary shadow-inner border border-primary/20">
+                                <GraduationCap className="h-6 w-6" />
+                            </div>
                             Educación
                         </h2>
                         <div className="space-y-6">

@@ -1,7 +1,7 @@
 "use client"
 
 import { Mail, MapPin, Linkedin, Github } from "lucide-react"
-import { motion } from "framer-motion"
+import { m } from "framer-motion"
 import { Badge } from "@/components/ui/badge"
 import { GlassCard } from "@/components/ui/glass-card"
 
@@ -26,7 +26,7 @@ export function ContactSection() {
         <div className="mb-20 w-full flex flex-col items-center text-center">
 
           {/* Animated Context Badge */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -40,7 +40,7 @@ export function ContactSection() {
               </span>
               Disponible para proyectos
             </Badge>
-          </motion.div>
+          </m.div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight flex items-center justify-center gap-3 mb-6 text-foreground">
             Hablemos
@@ -56,7 +56,7 @@ export function ContactSection() {
           {/* Email Card */}
           <GlassCard className="h-full p-6 md:p-8 flex flex-col justify-center">
             <div className="w-full h-full flex items-center justify-center gap-4">
-              <div className="p-2.5 rounded-full bg-primary/10 text-primary shrink-0">
+              <div className="flex items-center justify-center w-10 h-10 shrink-0 rounded-full bg-primary/10 text-primary shadow-inner border border-primary/20">
                 <Mail className="h-5 w-5" />
               </div>
               <div className="flex flex-col text-left">
@@ -72,7 +72,7 @@ export function ContactSection() {
           {/* Location Card */}
           <GlassCard className="h-full p-6 md:p-8 flex flex-col justify-center">
             <div className="w-full h-full flex items-center justify-center gap-4">
-              <div className="p-2.5 rounded-full bg-primary/10 text-primary shrink-0">
+              <div className="flex items-center justify-center w-10 h-10 shrink-0 rounded-full bg-primary/10 text-primary shadow-inner border border-primary/20">
                 <MapPin className="h-5 w-5" />
               </div>
               <div className="flex flex-col text-left">
@@ -90,11 +90,11 @@ export function ContactSection() {
               <p className="text-xs text-muted-foreground uppercase tracking-wider font-bold mb-4">Redes Sociales</p>
               <div className="flex flex-row gap-4">
 
-                <a href="https://www.linkedin.com/in/julioniecor/" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de LinkedIn" className="h-12 w-12 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary/20 transition-colors">
-                  <Linkedin className="h-5 w-5 hover:scale-110 transition-transform" />
+                <a href="https://www.linkedin.com/in/julioniecor/" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de LinkedIn" className="flex items-center justify-center w-12 h-12 shrink-0 rounded-full bg-primary/10 text-primary shadow-inner border border-primary/20 hover:bg-primary/20 hover:-translate-y-1 hover:shadow-[0_0_15px_-3px_var(--color-primary)] transition-all duration-300">
+                  <Linkedin className="h-5 w-5" />
                 </a>
-                <a href="https://github.com/JulioNiecor" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de GitHub" className="h-12 w-12 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary/20 transition-colors">
-                  <Github className="h-5 w-5 hover:scale-110 transition-transform" />
+                <a href="https://github.com/JulioNiecor" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de GitHub" className="flex items-center justify-center w-12 h-12 shrink-0 rounded-full bg-primary/10 text-primary shadow-inner border border-primary/20 hover:bg-primary/20 hover:-translate-y-1 hover:shadow-[0_0_15px_-3px_var(--color-primary)] transition-all duration-300">
+                  <Github className="h-5 w-5" />
                 </a>
               </div>
             </div>

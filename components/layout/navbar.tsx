@@ -1,11 +1,11 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion"
-import { Menu, X, Code2, Sun, Moon } from "lucide-react"
-import { useTheme } from "next-themes"
+import { useState } from "react"
+import { m, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion"
+import { Menu, X, Code2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 const navItems = [
   { name: "Inicio", href: "#hero" },
@@ -19,9 +19,6 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  const { theme, setTheme, resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-
   const { scrollY } = useScroll()
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -29,26 +26,19 @@ export function Navbar() {
     setIsScrolled(latest > 50)
   })
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const scrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, href: string) => {
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, href: string) => {
     e.preventDefault()
+    setMobileMenuOpen(false)
     const element = document.querySelector(href)
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-      setMobileMenuOpen(false)
+      const top = element.getBoundingClientRect().top + window.scrollY - 80
+      window.scrollTo({ top, behavior: "smooth" })
     }
-  }, [])
-
-  const toggleTheme = useCallback(() => {
-    setTheme(resolvedTheme === "dark" ? "light" : "dark")
-  }, [resolvedTheme, setTheme])
+  }
 
   return (
     <>
-      <motion.nav
+      <m.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         className={cn(
@@ -59,10 +49,10 @@ export function Navbar() {
         )}
       >
         <div className="container mx-auto px-4 h-full flex items-center justify-between">
-          <a href="#" aria-label="Volver al inicio" className="flex items-center gap-2 font-bold text-xl tracking-tighter outline-none">
+          <Link href="/" aria-label="Volver al inicio" className="flex items-center gap-2 font-bold text-xl tracking-tighter outline-none">
             <Code2 className="text-primary h-6 w-6" />
             <span>JNC<span className="text-primary">.</span></span>
-          </a>
+          </Link>
 
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
@@ -78,65 +68,31 @@ export function Navbar() {
             ))}
 
             <div className="flex items-center gap-4">
-              {/* Fixed size container to prevent Cumulative Layout Shift (CLS) */}
-              <div className="w-9 h-9 flex items-center justify-center">
-                {mounted ? (
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full w-9 h-9 border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer"
-                    onClick={toggleTheme}
-                    aria-label="Cambiar tema"
-                  >
-                    <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-transform duration-500 dark:-rotate-90 dark:scale-0" />
-                    <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-transform duration-500 dark:rotate-0 dark:scale-100" />
-                  </Button>
-                ) : (
-                  // Static placeholder matching the button dimensions avoiding hydration mismatch
-                  <div className="w-9 h-9 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5" />
-                )}
-              </div>
-
-              <Button variant="default" size="sm" className="rounded-full cursor-pointer" onClick={(e) => scrollToSection(e as any, "#contact")}>
+              <Button variant="default" size="sm" className="rounded-full cursor-pointer" onClick={(e) => scrollToSection(e, "#contact")}>
                 Contratar
               </Button>
             </div>
           </div>
 
           <div className="flex items-center gap-4 md:hidden">
-            {/* Fixed size container to prevent CLS (Mobile) */}
-            <div className="w-9 h-9 flex items-center justify-center">
-              {mounted ? (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-full w-9 h-9 border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer"
-                  onClick={toggleTheme}
-                  aria-label="Cambiar tema"
-                >
-                  <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-transform duration-500 dark:-rotate-90 dark:scale-0" />
-                  <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-transform duration-500 dark:rotate-0 dark:scale-100" />
-                </Button>
-              ) : (
-                <div className="w-9 h-9 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5" />
-              )}
-            </div>
-
             <button
               type="button"
               className="text-foreground cursor-pointer outline-none w-6 h-6 flex items-center justify-center"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
+              aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               {mobileMenuOpen ? <X /> : <Menu />}
             </button>
           </div>
         </div>
-      </motion.nav>
+      </m.nav>
 
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
+          <m.div
+            id="mobile-menu"
             initial={{ opacity: 0, x: "100%" }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
@@ -152,7 +108,7 @@ export function Navbar() {
                 {item.name}
               </a>
             ))}
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

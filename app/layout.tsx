@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/providers/theme-provider";
+import { FramerProvider } from "@/components/providers/framer-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,6 +42,9 @@ export const metadata: Metadata = {
     description: "Desarrollador Frontend especializado en interfaces modernas e interactivas.",
     images: ["/og-image.png"],
   },
+  alternates: {
+    canonical: "/",
+  },
   icons: {
     icon: "/logo.webp",
     shortcut: "/logo.webp",
@@ -57,21 +60,34 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Julio Nieto",
+    url: "https://julioniecor.netlify.app",
+    jobTitle: "Desarrollador Web Frontend",
+    sameAs: [
+      "https://github.com/JulioNiecor",
+      "https://www.linkedin.com/in/julioniecor/"
+    ],
+  };
+
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es" className="dark" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
+        />
+      </head>
       {/* Font variables injection */}
       <body
         className={`min-h-screen bg-background text-foreground antialiased ${geistSans.variable} ${geistMono.variable}`}
         suppressHydrationWarning
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
+        <FramerProvider>
           {children}
-        </ThemeProvider>
+        </FramerProvider>
       </body>
     </html>
   );
